@@ -3,9 +3,12 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { useHistory } from 'react-router-dom';
 
 
 function SignIn() {
+    var history = useHistory();
+
     var styles = {
         signUpButton: {
             position: 'absolute', 
@@ -48,12 +51,12 @@ function SignIn() {
 
     return ( 
         <Box>
-            <Button variant="text" sx={styles.signUpButton}>Sign up</Button>
+            <Button variant="text" sx={styles.signUpButton} onClick={() => history.push("/signup")}>Sign up</Button>
             <Paper elevation={2} sx={styles.container}>
                 <Typography variant='h4' sx={styles.signInLabel}>Sign In</Typography>
                 <TextField label="Email" variant="standard" color="primary" sx={styles.textField} />
                 <TextField label="Password" variant="standard" color="primary" sx={styles.textField} />
-                <Button variant="contained" sx={styles.signInButton}>Sign in</Button>
+                <Button variant="contained" sx={styles.signInButton} onClick={() => history.push("/profile")}>Sign in</Button>
             </Paper>
         </Box>
     );
