@@ -3,10 +3,14 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 function SignUp() {
     
+    var [name, setName] = useState("");
+    var [email, setEmail] = useState("");
+    var [password, setPassword] = useState("");
     var history = useHistory();
     
     var styles = {
@@ -50,13 +54,15 @@ function SignUp() {
     }
     
     return ( 
-        <Box>
+        <Box
+            component="form"
+        >
             <Button variant="text" sx={styles.SignInButton} onClick={() => history.push("/")}>Sign In</Button>
             <Paper sx={styles.container}>
                 <Typography variant="h4" sx={styles.signInLabel}>Sign Up</Typography>
-                <TextField label="Name" variant="standard" color="primary" sx={styles.textField} />
-                <TextField label="Email" variant="standard" color="primary" sx={styles.textField} />
-                <TextField label="Password" variant="standard" color="primary" sx={styles.textField} />
+                <TextField label="Name" variant="standard" color="primary" sx={styles.textField} onChange={(e) => setName(e.target.value)} value={name} />
+                <TextField label="Email" variant="standard" color="primary" sx={styles.textField} onChange={(e) => setEmail(e.target.value)} value={email} />
+                <TextField label="Password" variant="standard" color="primary" sx={styles.textField} onChange={(e) => setPassword(e.target.value)} value={password} />
                 <Button variant="contained" sx={styles.signInButton} onClick={() => history.push("/")}>Sign Up</Button>
             </Paper>
         </Box>
