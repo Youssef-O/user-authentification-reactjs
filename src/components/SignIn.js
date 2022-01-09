@@ -3,10 +3,13 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 
 function SignIn() {
+    var [email, setEmail] = useState("");
+    var [password, setPassword] = useState("");
     var history = useHistory();
 
     var styles = {
@@ -50,12 +53,14 @@ function SignIn() {
     }
 
     return ( 
-        <Box>
+        <Box 
+            component="form"
+        >
             <Button variant="text" sx={styles.signUpButton} onClick={() => history.push("/signup")}>Sign up</Button>
             <Paper elevation={2} sx={styles.container}>
                 <Typography variant='h4' sx={styles.signInLabel}>Sign In</Typography>
-                <TextField label="Email" variant="standard" color="primary" sx={styles.textField} />
-                <TextField label="Password" variant="standard" color="primary" sx={styles.textField} />
+                <TextField label="Email" variant="standard" color="primary" sx={styles.textField} onChange={(e) => setEmail(e.target.value)} value={email} />
+                <TextField label="Password" variant="standard" color="primary" sx={styles.textField} onChange={(e) => setPassword(e.target.value)} value={password}/>
                 <Button variant="contained" sx={styles.signInButton} onClick={() => history.push("/profile")}>Sign in</Button>
             </Paper>
         </Box>
