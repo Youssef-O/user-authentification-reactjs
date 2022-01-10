@@ -3,16 +3,15 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 
 function SignIn() {
-    var [email, setEmail] = useState("");
-    var [password, setPassword] = useState("");
-    var history = useHistory();
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const history = useHistory();
 
-    var styles = {
+    const styles = {
         signUpButton: {
             position: 'absolute', 
             top: 0, 
@@ -24,6 +23,7 @@ function SignIn() {
         container: {
             backgroundColor: '#FFFFFF',
             height: '50vh',
+            minHeight: '250px',
             width: '33vw',
             minWidth: '350px',
             margin: '12vh auto 0',
@@ -52,16 +52,53 @@ function SignIn() {
         }
     }
 
+    const submitHandler = (data) => {
+        console.log("Submit Handler Called");
+        console.log(errors);
+        history.push("/profile")
+    }
+
     return ( 
         <Box 
             component="form"
+            onSubmit={ handleSubmit(submitHandler) }
         >
             <Button variant="text" sx={styles.signUpButton} onClick={() => history.push("/signup")}>Sign up</Button>
             <Paper elevation={2} sx={styles.container}>
                 <Typography variant='h4' sx={styles.signInLabel}>Sign In</Typography>
-                <TextField label="Email" variant="standard" color="primary" sx={styles.textField} onChange={(e) => setEmail(e.target.value)} value={email} />
-                <TextField label="Password" variant="standard" color="primary" sx={styles.textField} onChange={(e) => setPassword(e.target.value)} value={password}/>
-                <Button variant="contained" sx={styles.signInButton} onClick={() => history.push("/profile")}>Sign in</Button>
+                <TextField 
+                    label="Email" 
+                    variant="standard" 
+                    color="primary" 
+                    sx={styles.textField} 
+                    {...register('email', { 
+                            required: "Email is required", 
+                            pattern: {value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i, 
+                            message: "This is not a valid email"}})
+                    }
+                    error={errors.email ? true : false}
+                    helperText={errors.email?.message} 
+                />
+                <TextField 
+                    label="Password" 
+                    variant="standard" 
+                    color="primary" 
+                    sx={styles.textField} 
+                    type="password"
+                    {...register('password', { 
+                            required: "Password is required", 
+                            minLength: {value: 4, message: "Password must be more than 4 characters"} })
+                    }
+                    error={errors.password ? true : false}
+                    helperText={errors.password?.message} 
+                />
+                <Button 
+                    variant="contained" 
+                    sx={styles.signInButton}
+                    type="submit"
+                >
+                    Sign in
+                </Button>
             </Paper>
         </Box>
     );
