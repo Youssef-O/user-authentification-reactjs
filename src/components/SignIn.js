@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 
 
 function SignIn() {
+    
     const { register, handleSubmit, formState: { errors } } = useForm();
     const history = useHistory();
 
@@ -54,7 +55,7 @@ function SignIn() {
 
     const submitHandler = (data) => {
         console.log("Submit Handler Called");
-        console.log(errors);
+        console.log(data);
         history.push("/profile")
     }
 
@@ -74,7 +75,7 @@ function SignIn() {
                     {...register('email', { 
                             required: "Email is required", 
                             pattern: {value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i, 
-                            message: "This is not a valid email"}})
+                            message: "Enter a valid email"}})
                     }
                     error={errors.email ? true : false}
                     helperText={errors.email?.message} 
@@ -87,8 +88,11 @@ function SignIn() {
                     type="password"
                     {...register('password', { 
                             required: "Password is required", 
-                            minLength: {value: 4, message: "Password must be more than 4 characters"} })
-                    }
+                            minLength: {
+                                value: 4, 
+                                message: "Password must be more than 4 characters"
+                            }
+                    })}
                     error={errors.password ? true : false}
                     helperText={errors.password?.message} 
                 />
