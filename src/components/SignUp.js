@@ -52,9 +52,20 @@ function SignUp() {
     }
     
     const submitHandler = (data) => {
-        console.log("Submit Handler Called");
-        console.log(data);
-        history.push("/");
+
+        fetch('http://localhost:4000/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: {
+                userName: data.userName,
+                email: data.email,
+                password: data.password
+            }
+        }).then((res) => {
+            (res.status == 200) ? history.push("/") : console.log('Sign-up Failed');
+        })
     }
 
     return ( 
