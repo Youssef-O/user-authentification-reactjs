@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useHistory } from 'react-router-dom';
 
-function Home() {
+function Home(props) {
 
     var history = useHistory();
 
@@ -27,7 +27,7 @@ function Home() {
     return ( 
         <Box>
             <Button variant="text" sx={styles.signOutButton} onClick={() => history.push("/")}>Sign Out</Button>
-            <Typography variant="h3" sx={styles.welcomeSentence}>Welcome Back, <b>YSSF</b></Typography>
+            <Typography variant="h3" sx={styles.welcomeSentence}>Welcome Back, <b>{props.location.state}</b></Typography>
         </Box>
     );
 }

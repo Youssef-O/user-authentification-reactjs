@@ -54,9 +54,21 @@ function SignIn() {
     }
 
     const submitHandler = (data) => {
-        console.log("Submit Handler Called");
-        console.log(data);
-        history.push("/profile")
+
+        fetch('http://localhost:4000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: data.email,
+                password: data.password
+            })
+        }).then((res) => {
+            return res.json();
+        }).then((data) => {
+            history.push("/profile", data.userName);
+        })
     }
 
     return ( 
