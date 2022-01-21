@@ -3,13 +3,17 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 
 
 function SignIn() {
     
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
     const history = useHistory();
 
     const styles = {
@@ -25,14 +29,14 @@ function SignIn() {
             backgroundColor: '#FFFFFF',
             height: '50vh',
             minHeight: '250px',
-            width: '33vw',
+            width: '25vw',
             minWidth: '350px',
             margin: '12vh auto 0',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'space-around',
-            padding: '25px 0'
+            padding: '25px 20px'
         },
 
         signInLabel: {
@@ -40,11 +44,11 @@ function SignIn() {
         },
 
         textField: {
-            width: '70%',
+            width: '85%',
         },
 
         signInButton: {
-            width: '70%', 
+            width: '85%', 
             padding: '9px 0', 
             backgroundColor: '#365A0C', 
             '&:hover': {
@@ -65,9 +69,26 @@ function SignIn() {
                 password: data.password
             })
         }).then((res) => {
-            return res.json();
+            if (res.ok) {
+                return res.json();
+            } else {
+                return res.text();
+            };
         }).then((data) => {
-            history.push("/profile", data.userName);
+            if(data.email != null) {
+                history.push("/profile", data.userName);
+            } else {
+                if(data == 'User not found'){
+                    setAlertMessage('Invalid Email. please try again');
+                    setShowAlert(true);
+                }
+                if(data == 'Login Failed'){
+                    setAlertMessage('Invalid Password. please try again');
+                    setShowAlert(true);
+                }
+            }
+        }).catch((err) => {
+            console.log(err.message);
         })
     }
 
@@ -115,6 +136,11 @@ function SignIn() {
                 >
                     Sign in
                 </Button>
+                {showAlert &&
+                    <Alert severity="error" sx={{width: '78%', marginTop: '12px'}}>
+                        {alertMessage}
+                    </Alert>
+                }
             </Paper>
         </Box>
     );

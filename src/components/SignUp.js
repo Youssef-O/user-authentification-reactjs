@@ -22,7 +22,8 @@ function SignUp() {
         
         container: {
             width: '33vw', 
-            height: '50vh', 
+            height: '50vh',
+            minHeight: '250px', 
             backgroundColor: '#FFFFFF', 
             margin: '12vh auto 0',
             display: 'flex',
