@@ -6,8 +6,8 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
-
+import { useState, useContext } from 'react';
+import { UserContext } from '../userContext';
 
 function SignIn() {
     
@@ -15,6 +15,7 @@ function SignIn() {
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
     const history = useHistory();
+    const { setUserName } = useContext(UserContext);
 
     const styles = {
         signUpButton: {
@@ -76,7 +77,8 @@ function SignIn() {
             };
         }).then((data) => {
             if(data.email != null) {
-                history.push("/profile", data.userName);
+                setUserName(data.userName);
+                history.push("/profile");
             } else {
                 if(data == 'User not found'){
                     setAlertMessage('Invalid Email. please try again');

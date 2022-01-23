@@ -2,10 +2,13 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useHistory } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '../userContext';
 
-function Home(props) {
+function Home() {
 
     var history = useHistory();
+    const { userName } = useContext(UserContext);
 
     var styles = {
         signOutButton: {
@@ -27,7 +30,7 @@ function Home(props) {
     return ( 
         <Box>
             <Button variant="text" sx={styles.signOutButton} onClick={() => history.push("/")}>Sign Out</Button>
-            <Typography variant="h3" sx={styles.welcomeSentence}>Welcome Back, <b>{props.location.state}</b></Typography>
+            <Typography variant="h3" sx={styles.welcomeSentence}>Welcome Back, <b>{userName}</b></Typography>
         </Box>
     );
 }

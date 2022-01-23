@@ -3,6 +3,8 @@ import SignIn from './components/SignIn.js';
 import SignUp from './components/SignUp.js';
 import Home from './components/Home.js';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { UserContext } from './userContext';
+import { useState } from 'react';
 
 function App() {
   var theme = createTheme({
@@ -13,14 +15,18 @@ function App() {
     },
   })
 
+  const [userName, setUserName] = useState("");
+
   return (
     <Router>
       <ThemeProvider theme={theme}>
-        <Switch>
-          <Route exact path="/" component={SignIn} />
-          <Route exact path="/signup" component={SignUp} />
-          <Route exact pach="/profile" component={Home} />
-        </Switch>
+        <UserContext.Provider value={{userName, setUserName}}>
+          <Switch>
+            <Route exact path="/" component={SignIn} />
+            <Route exact path="/signup" component={SignUp} />
+            <Route exact pach="/profile" component={Home} />
+          </Switch>
+        </UserContext.Provider>
       </ThemeProvider>
     </Router>
   );
