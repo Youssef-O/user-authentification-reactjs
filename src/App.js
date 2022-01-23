@@ -16,11 +16,12 @@ function App() {
   })
 
   const [userName, setUserName] = useState("");
+  const [authorized, setAuthorized] = useState(false);
 
   return (
     <Router>
       <ThemeProvider theme={theme}>
-        <UserContext.Provider value={{userName, setUserName}}>
+        <UserContext.Provider value={{userName, setUserName, authorized, setAuthorized}}>
           <Switch>
             <Route exact path="/" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />

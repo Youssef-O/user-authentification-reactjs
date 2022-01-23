@@ -15,7 +15,7 @@ function SignIn() {
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
     const history = useHistory();
-    const { setUserName } = useContext(UserContext);
+    const { setAuthorized, setUserName } = useContext(UserContext);
 
     const styles = {
         signUpButton: {
@@ -77,6 +77,7 @@ function SignIn() {
             };
         }).then((data) => {
             if(data.email != null) {
+                setAuthorized(true);
                 setUserName(data.userName);
                 history.push("/profile");
             } else {
