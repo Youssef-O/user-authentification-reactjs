@@ -21,7 +21,7 @@ function SignUp() {
         },
         
         container: {
-            width: '33vw', 
+            width: '25vw', 
             height: '50vh',
             minHeight: '250px', 
             backgroundColor: '#FFFFFF', 
@@ -30,7 +30,7 @@ function SignUp() {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '50px 0', 
+            padding: '50px 20px', 
         },
 
         signInLabel: {
@@ -38,11 +38,11 @@ function SignUp() {
         },
 
         textField: {
-            width: '70%'
+            width: '85%'
         },
 
         signInButton: {
-            width: '70%', 
+            width: '85%', 
             padding: '9px 0', 
             backgroundColor: '#365A0C', 
             '&:hover': {
